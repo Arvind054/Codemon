@@ -6,6 +6,10 @@ const server = createServer(app);
 const io = new Server(server);
 const userMapping = {};
 app.use(express.json());
+
+
+app.use(express.json());
+
 function getConnections(Roomid){
     return Array.from(io.sockets.adapter.rooms.get(Roomid) || []).map((socketId)=>{
            return {

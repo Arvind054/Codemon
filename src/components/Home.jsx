@@ -5,7 +5,7 @@ import Editor from './Editor'
 import { initSocket } from '../socket'
 import { Navigate, useLocation, useNavigate, useParams } from 'react-router-dom'
 import toast from 'react-hot-toast'
-import Output from './Output'
+
 const Home = () => {
    const [users, setUsers] = useState([])
    const socketRef = useRef(null);
@@ -92,9 +92,7 @@ const Home = () => {
                setLang = {(language)=>{setlanguage(language)}}
                />
        </div>
-       <div className="outPutSide">
-         <Output code = {codeRef.current} language = {language}></Output>
-       </div>
+      
     </div>
   )
 }
