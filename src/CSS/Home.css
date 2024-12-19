@@ -2,22 +2,32 @@
     margin: 0;
     display: flex;
     height: 100vh; 
-    width: 100vw;   
+    width: 100%;   
 }
 .left{
-  height: 100vh;
-    width: 20%;
-      background-color: #18191a; 
-      color: white;
-      padding: 10px;
-      box-sizing: border-box;
-      border-right: 4px solid black;
+  height: 100%;
+  width: 15%;
+  background-color: #18191a; 
+  color: white;
+  padding: 10px;
+  box-sizing: border-box;
+  border-right: 4px solid black;
       
 }
 .left-content{
   height: 100%;
   display: flex;
   flex-direction: column;
+}
+.left-content h1{
+    font-size: 2rem;
+    font-family:'Trebuchet MS', 'Lucida Sans Unicode', 'Lucida Grande', 'Lucida Sans', Arial, sans-serif;
+    margin: 0.5rem;
+}
+.left-content h2{
+  margin: 1rem 0.8rem;
+  font-weight: 300;
+  font-size: 1.5rem;
 }
 .right{
     flex: 1; 
@@ -32,7 +42,10 @@
   justify-content: center;
   flex-wrap: wrap;
 }
-
+.controls{
+  display: flex;
+  flex-direction: column;
+}
 .copyBtn{
   background-color: green;
   margin: 0.5rem 0.1rem;
@@ -45,3 +58,8 @@
   margin: 0.5rem 0.1rem;
   margin-left: 0.3rem;
 }
+.outPutSide{
+   width: 22%;
+   background-color: black;
+}
+

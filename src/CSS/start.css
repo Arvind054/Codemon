@@ -5,6 +5,15 @@
     height: 15rem;
     border-radius: 10px;
     background-color: rgb(41, 41, 47);
+    font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+    border: 1px solid rgb(0, 175, 250);
+    
+}
+.main h2{
+    margin: 1.5rem;
+}
+.main button{
+    margin: 1.5rem;
 }
 .Main-container{
     display: flex;
@@ -12,4 +21,5 @@
     align-items: center;
     margin: auto;
     height: 90vh;
+    text-align: center;
 }

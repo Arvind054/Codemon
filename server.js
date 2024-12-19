@@ -3,9 +3,9 @@ const app = express();
 import { createServer } from 'http';
 import { Server } from 'socket.io';
 const server = createServer(app);
-
 const io = new Server(server);
 const userMapping = {};
+app.use(express.json());
 function getConnections(Roomid){
     return Array.from(io.sockets.adapter.rooms.get(Roomid) || []).map((socketId)=>{
            return {
@@ -15,7 +15,6 @@ function getConnections(Roomid){
     })
 }
 io.on('connection', (socket)=>{
-    console.log("connected successfully", socket.id);
     socket.on('join', (params)=>{
           userMapping[socket.id] = params.username;
           socket.join(params.id);
@@ -50,7 +49,6 @@ io.on('connection', (socket)=>{
 
 
 
-const port = process.env.port || 3000;
+const port = 3000;
 server.listen(port, ()=>{
-    console.log(`listening on parot ${port}`);
 })

@@ -2,6 +2,7 @@
 import React, { useState } from 'react'
 import toast from 'react-hot-toast';
 import { useNavigate } from 'react-router-dom';
+import '../CSS/joinRoom.css'
 const JoinRoom = () => {
   const navigate = useNavigate();
   const [roomId, setRoomId] = useState('');
@@ -20,14 +21,14 @@ const JoinRoom = () => {
        }
   }
   return (
-    <div>
+    <div className='Main-container'>
       
-      <div className="JoinRoomMain">
+      <div className="main">
            <h2>Join A Room</h2>
            <form action="">
-            <input type="text"  placeholder='Enter Room Id'  value={roomId} onChange={(e)=>setRoomId(e.target.value)} onKeyUp={handleEnter}/>
+            <input className='joinInputs' type="text"  placeholder='Enter Room Id'  value={roomId} onChange={(e)=>setRoomId(e.target.value)} onKeyUp={handleEnter}/>
             <br />
-            <input type="text" placeholder='Enter Username' value={userName} onChange={(e)=> setUserName(e.target.value)} onKeyUp={handleEnter}/>
+            <input className='joinInputs' type="text" placeholder='Enter Username' value={userName} onChange={(e)=> setUserName(e.target.value)} onKeyUp={handleEnter}/>
             <br />
           <button onClick={joinRoom}>Join</button>
            </form>

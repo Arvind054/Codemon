@@ -13,11 +13,15 @@ const languageExtensions = {
   java: java(),
   cpp: cpp(),
 };
-
-function Editor({socketRef, roomId, onCodeChange}) {
+const themes = {
+  'dracula' : dracula,
+  'okaidia' : okaidia
+}
+function Editor({socketRef, roomId, onCodeChange, setLang}) {
   const [code, setCode] = useState('');
-  const [language, setLanguage] = useState('javascript');
-  const [theme, setTheme] = useState('dracula')
+  const [language, setLanguage] = useState('cpp');
+  const [theme, setTheme] = useState('dracula');
+  const [fontsize, setFontSize] = useState(20);
   const EditorRef  = useRef(code);
  
   useEffect(()=>{
@@ -39,6 +43,10 @@ function Editor({socketRef, roomId, onCodeChange}) {
         socketRef.current.off('code-change');
        }
   })
+  function handleLanguage(e){
+    setLang(e.target.value);
+    setLanguage(e.target.value);
+  }
   function handleChange(){
          const code = EditorRef.current;
          onCodeChange(code);
@@ -48,48 +56,62 @@ function Editor({socketRef, roomId, onCodeChange}) {
          });
   }
   return (
-    <div style={{ padding: '20px' }}>
+    <div style={{ padding: '0px' }}>
         <div className="inputs">
+          <div className='EditorInputsContainer'> 
+          <label htmlFor="languageSelector">Select language</label>
       <select
         value={language}
-        onChange={(e) => setLanguage(e.target.value)}
-        style={{
-          marginBottom: '10px',
-          padding: '5px',
-          fontSize: '20px',
-        }}
+        onChange={(e)=>handleLanguage(e)}
+        className='EditorInputs'
+        id='languageSelector'
       >
-        <option value="javascript">JavaScript</option>
-        <option value="python">Python</option>
-        <option value="java">Java</option>
-        <option value="cpp">C++</option>
-      </select>
-
-      <select
-        value={language}
-        onChange={(e) => setLanguage(e.target.value)}
-        style={{
-          marginBottom: '10px',
-          padding: '5px',
-          fontSize: '20px',
-        }}
-      >
+        
         <option value="javascript">JavaScript</option>
         <option value="python">Python</option>
         <option value="java">Java</option>
         <option value="cpp">C++</option>
       </select>
       </div>
-     
+      <div className='EditorInputsContainer'> 
+      <label htmlFor="ThemeSelector">Select Theme</label>
+      <select
+        value={theme}
+        onChange={(e) => setTheme(e.target.value)}
+          className='EditorInputs'
+        id='ThemeSelector'
+      >
+        <option value="dracula">Dark Light</option>
+        <option value="okaidia">Dark</option>
+        <option value="java">Java</option>
+        <option value="cpp">C++</option>
+      </select>
+      </div>
+      <div className='EditorInputsContainer'> 
+      <label htmlFor="fontSizeSelector">Font Size</label>
+      <select
+        value={fontsize}
+        onChange={(e) => setFontSize(e.target.value)}
+         className='EditorInputs'
+        id='fontSizeSelector'
+      >
+        <option value={10}>10px</option>
+        <option value={15}>15px</option>
+        <option value={20}>20px</option>
+        <option value={25}>25px</option>
+      </select>
+      </div>
+      </div>
       <CodeMirror
         value={code}
-        height="70vh"
-        theme={dracula}
+        height="85vh"
+        theme={themes[theme]}
         extensions={[languageExtensions[language]]}
         onChange={(e)=>{
          EditorRef.current = e;
          handleChange();
         }}
+        style={{ fontSize:  `${fontsize}px` }} 
       />
     </div>
   );

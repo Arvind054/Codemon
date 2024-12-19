@@ -25,12 +25,12 @@ const CreateRoom = () => {
         }
     }
   return (
-    <div>
+    <div className='Main-container'>
         <div className="main">
              <h2>Create A new Room</h2>
-             <input type="text" value={id} />
+             <input className='joinInputs' type="text" value={id} />
              <br />
-             <input type="text" placeholder='Enter Your UserName'  value={userName} onChange={(e)=> setUserName(e.target.value)} onKeyUp={handleEnter}/>
+             <input className='joinInputs' type="text" placeholder='Enter Your UserName'  value={userName} onChange={(e)=> setUserName(e.target.value)} onKeyUp={handleEnter}/>
              <br />
              <button onClick={joinRoom}>Create</button>
 

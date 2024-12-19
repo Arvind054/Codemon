@@ -5,13 +5,14 @@ import Editor from './Editor'
 import { initSocket } from '../socket'
 import { Navigate, useLocation, useNavigate, useParams } from 'react-router-dom'
 import toast from 'react-hot-toast'
-
+import Output from './Output'
 const Home = () => {
    const [users, setUsers] = useState([])
    const socketRef = useRef(null);
    const location = useLocation();
    const {id}= useParams();
-   const codeRef = useRef(null)
+   const codeRef = useRef(null);
+   const [language, setlanguage] = useState('cpp');
    let HomeNavigator = useNavigate();
    function handleError(e){
       console.log("error ", e);
@@ -21,6 +22,7 @@ const Home = () => {
    if( !location.state){
       return <Navigate to={'/'}/>
    }
+
    useEffect(()=>{
        const init = async ()=>{
          socketRef.current = await initSocket();
@@ -62,13 +64,14 @@ const Home = () => {
   function handleLeave(){
    HomeNavigator('/');
   }
+
   return (
     <div className='Home-Component'>
        <div className="left">
           <div className="left-content">
               <h1>CodeMon</h1>
-              <hr />
-                 <h2>People</h2>
+              <hr/>
+                 <h2>Connected:</h2>
                  <div className="connections">
                   {
                    users.map((singleUser)=>{
@@ -85,7 +88,12 @@ const Home = () => {
           </div>
        </div>
        <div className="right">
-            <Editor socketRef = {socketRef} roomId = {id} onCodeChange= {(code)=>{codeRef.current = code}}/>
+            <Editor socketRef = {socketRef} roomId = {id} onCodeChange= {(code)=>{codeRef.current = code}} 
+               setLang = {(language)=>{setlanguage(language)}}
+               />
+       </div>
+       <div className="outPutSide">
+         <Output code = {codeRef.current} language = {language}></Output>
        </div>
     </div>
   )
