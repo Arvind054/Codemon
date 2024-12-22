@@ -5,7 +5,7 @@ import Editor from './Editor'
 import { initSocket } from '../socket'
 import { Navigate, useLocation, useNavigate, useParams } from 'react-router-dom'
 import toast from 'react-hot-toast'
-
+import UserVideos from './UserVideos'
 const Home = () => {
    const [users, setUsers] = useState([])
    const socketRef = useRef(null);
@@ -13,6 +13,8 @@ const Home = () => {
    const {id}= useParams();
    const codeRef = useRef(null);
    const [language, setlanguage] = useState('cpp');
+   const [videoSrc, setVideoSrc] = useState(null);
+   const videoElement = document.getElementById('userLocalVideo');
    let HomeNavigator = useNavigate();
    function handleError(e){
       console.log("error ", e);
@@ -49,6 +51,7 @@ const Home = () => {
               })
          })
        };
+
        init();
 
        return () =>{
@@ -57,6 +60,9 @@ const Home = () => {
          socketRef.current.off('disconnected');
        }
    }, [])
+   useEffect(()=>{
+
+   })
   function handleCopy(){
         navigator.clipboard.writeText(id);
         toast.success("Room Id Copied To Clipboard");
@@ -64,7 +70,22 @@ const Home = () => {
   function handleLeave(){
    HomeNavigator('/');
   }
+  async function handleVideoSrc(){
+   if (!videoSrc) {
+      try {
+          const stream = await navigator.mediaDevices.getUserMedia({ video: true, audio: false });
+          videoElement.srcObject = stream;
+          setVideoSrc(stream); 
+          socketRef.current.emit('videoSharing',)
+      } catch (err) {
+          toast.error("error starting video");
+      }
+  } else {
+      videoSrc.getTracks().forEach((track) => track.stop()); 
 
+      setVideoSrc(null);
+  }
+   }
   return (
     <div className='Home-Component'>
        <div className="left">
@@ -92,7 +113,18 @@ const Home = () => {
                setLang = {(language)=>{setlanguage(language)}}
                />
        </div>
-      
+        <div className='sidePannel'>
+              <UserVideos/>
+              <div className="userAudioVideoPannel">
+                 <div className="userVideo">
+                    <video id='userLocalVideo'autoPlay muted ></video>
+                 </div>
+                  <div className="userControls">
+                  <button id="video-toggle" onClick={handleVideoSrc}>{videoSrc=== null ? 'turn on': 'turn off'}</button>
+                  <button id="audio-toggle">Turn On Audio</button>
+                  </div>
+              </div>
+        </div>
     </div>
   )
 }
