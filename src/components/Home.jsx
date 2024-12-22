@@ -5,7 +5,6 @@ import Editor from './Editor'
 import { initSocket } from '../socket'
 import { Navigate, useLocation, useNavigate, useParams } from 'react-router-dom'
 import toast from 'react-hot-toast'
-import UserVideos from './UserVideos'
 const Home = () => {
    const [users, setUsers] = useState([])
    const socketRef = useRef(null);
@@ -113,18 +112,7 @@ const Home = () => {
                setLang = {(language)=>{setlanguage(language)}}
                />
        </div>
-        <div className='sidePannel'>
-              <UserVideos/>
-              <div className="userAudioVideoPannel">
-                 <div className="userVideo">
-                    <video id='userLocalVideo'autoPlay muted ></video>
-                 </div>
-                  <div className="userControls">
-                  <button id="video-toggle" onClick={handleVideoSrc}>{videoSrc=== null ? 'turn on': 'turn off'}</button>
-                  <button id="audio-toggle">Turn On Audio</button>
-                  </div>
-              </div>
-        </div>
+       
     </div>
   )
 }
