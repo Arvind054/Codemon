@@ -37,17 +37,7 @@ io.on('connection', (socket)=>{
               })
           })
     });
-  socket.on('connectVideo', (socketId)=>{
-     socket.broadcast.emit('videoConnected', socketId);
-     socket.emit('getAllUsers',  Array.from(io.sockets.sockets.keys()).map((s) => s !== socket.id ? s : null).filter(Boolean));
-  })
-  socket.on("signal", (data) => {
-    io.to(data.to).emit("signal", { from: data.from, signal: data.signal });
-  });
-   socket.on("disconnect", () => {
-    io.emit("user-left", socket.id);
-  });
-        
+  
     socket.on('code-change', ({roomId, code})=>{
          io.to(roomId).emit('code-change', {code})
     })

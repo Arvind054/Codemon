@@ -5,7 +5,7 @@ import Editor from './Editor'
 import { initSocket } from '../socket'
 import { Navigate, useLocation, useNavigate, useParams } from 'react-router-dom'
 import toast from 'react-hot-toast'
-import VideoPannel from './VideoPannel'
+
 const Home = () => {
    const [users, setUsers] = useState([])
    const socketRef = useRef(null);
@@ -98,12 +98,7 @@ const Home = () => {
                setLang = {(language)=>{setlanguage(language)}}
                />
        </div>
-       <div>
-         {
-             shareSocket && 
-          <VideoPannel socket = {shareSocket}></VideoPannel>
-         }
-       </div>
+      
     </div>
   )
 }
