@@ -5,6 +5,7 @@ import Editor from './Editor'
 import { initSocket } from '../socket'
 import { Navigate, useLocation, useNavigate, useParams } from 'react-router-dom'
 import toast from 'react-hot-toast'
+import VideoPannel from './VideoPannel'
 const Home = () => {
    const [users, setUsers] = useState([])
    const socketRef = useRef(null);
@@ -12,8 +13,8 @@ const Home = () => {
    const {id}= useParams();
    const codeRef = useRef(null);
    const [language, setlanguage] = useState('cpp');
-   const [videoSrc, setVideoSrc] = useState(null);
-   const videoElement = document.getElementById('userLocalVideo');
+   const [shareSocket, setShareSocket] = useState(null);
+ 
    let HomeNavigator = useNavigate();
    function handleError(e){
       console.log("error ", e);
@@ -41,7 +42,8 @@ const Home = () => {
                }
               setUsers(allConnections);
               const code = codeRef.current;
-              socketRef.current.emit('sync', {socketId,code})
+              socketRef.current.emit('sync', {socketId,code});
+              setShareSocket(socketRef.current);
          })
          socketRef.current.on('disconnected', ({socketId, username})=>{
               toast.success(`${username} left the room`);
@@ -59,9 +61,7 @@ const Home = () => {
          socketRef.current.off('disconnected');
        }
    }, [])
-   useEffect(()=>{
-
-   })
+  
   function handleCopy(){
         navigator.clipboard.writeText(id);
         toast.success("Room Id Copied To Clipboard");
@@ -69,22 +69,8 @@ const Home = () => {
   function handleLeave(){
    HomeNavigator('/');
   }
-  async function handleVideoSrc(){
-   if (!videoSrc) {
-      try {
-          const stream = await navigator.mediaDevices.getUserMedia({ video: true, audio: false });
-          videoElement.srcObject = stream;
-          setVideoSrc(stream); 
-          socketRef.current.emit('videoSharing',)
-      } catch (err) {
-          toast.error("error starting video");
-      }
-  } else {
-      videoSrc.getTracks().forEach((track) => track.stop()); 
 
-      setVideoSrc(null);
-  }
-   }
+   
   return (
     <div className='Home-Component'>
        <div className="left">
@@ -112,7 +98,12 @@ const Home = () => {
                setLang = {(language)=>{setlanguage(language)}}
                />
        </div>
-       
+       <div>
+         {
+             shareSocket && 
+          <VideoPannel socket = {shareSocket}></VideoPannel>
+         }
+       </div>
     </div>
   )
 }
