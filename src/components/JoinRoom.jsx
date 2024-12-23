@@ -2,7 +2,6 @@
 import React, { useState } from 'react'
 import toast from 'react-hot-toast';
 import { useNavigate } from 'react-router-dom';
-import '../CSS/joinRoom.css'
 const JoinRoom = () => {
   const navigate = useNavigate();
   const [roomId, setRoomId] = useState('');
