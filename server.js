@@ -8,7 +8,11 @@ import { fileURLToPath } from 'url';
 const __filename = fileURLToPath(import.meta.url);
 const __dirname = path.dirname(__filename);
 const server = createServer(app);
-const io = new Server(server);
+const io = new Server(server, {
+    cors: {
+      origin: "*",
+    },
+  });
 const userMapping = {};
 app.use(express.json());
 app.use(express.static('dist'));
@@ -23,6 +27,8 @@ function getConnections(Roomid){
            }
     })
 }
+
+  
 io.on('connection', (socket)=>{
     socket.on('join', (params)=>{
           userMapping[socket.id] = params.username;
