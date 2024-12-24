@@ -6,5 +6,6 @@ export const initSocket =async ()=>{
         timeout: 10000,
         transports :['websocket']
     }
+    const path = process.env.NODE_ENV === 'production' ? 'https://codemon-phi.vercel.app/': 'http://localhost:3000'
     return io('http://localhost:3000',options);
 }
