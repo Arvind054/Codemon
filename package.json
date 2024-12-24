@@ -8,7 +8,8 @@
     "build": "vite build",
     "lint": "eslint .",
     "preview": "vite preview",
-    "server dev": "nodemon server.js"
+    "server dev": "nodemon server.js",
+    "server prod" : "node server.js"
   },
   "dependencies": {
     "@codemirror/lang-cpp": "^6.0.2",
