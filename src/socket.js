@@ -9,6 +9,5 @@ export const initSocket =async ()=>{
             origin: "*"
           },
     }
-    const path = process.env.NODE_ENV === 'production' ? 'https://codemon-phi.vercel.app/': 'http://localhost:3000';
-    return io(path,options);
+    return io('http://localhost:3000',options);
 }

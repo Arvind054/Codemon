@@ -12,7 +12,7 @@ const io = new Server(server);
 const userMapping = {};
 app.use(express.json());
 app.use(express.static('dist'));
-app.use( (req, res)=>{
+app.use('*', (req, res)=>{
     res.sendFile(path.join(__dirname, 'dist', 'index.html'));
 })
 function getConnections(Roomid){
