@@ -18,12 +18,8 @@ const Home = () => {
    let HomeNavigator = useNavigate();
    function handleError(e){
       console.log("error ", e);
-      //toast.error("connection failled please try again");
-      socketRef.current.emit('join',
-         { id,
-          username : location.state?.userName
-         }
-       );
+      toast.error("connection failled please try again");
+      HomeNavigator('/');
    }
    if( !location.state){
       return <Navigate to={'/'}/>
