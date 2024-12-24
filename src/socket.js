@@ -5,9 +5,7 @@ export const initSocket =async ()=>{
         reconnectionAttemp: 'infinity',
         timeout: 10000,
         transports :['websocket'],
-        cors: {
-            origin: "*"
-          },
+       
     }
     return io('http://localhost:3000',options);
 }
