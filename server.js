@@ -1,18 +1,23 @@
 import express from 'express';
 const app = express();
 import { createServer } from 'http';
-import { Server } from 'socket.io';
 import path from 'path';
 import { fileURLToPath } from 'url';
+import { Server } from 'socket.io';
+const server = createServer(app);
 
 const __filename = fileURLToPath(import.meta.url);
 const __dirname = path.dirname(__filename);
-const server = createServer(app);
-const io = new Server(server);
+const io = new Server(server, {
+    cors: {
+        origin: "*",
+        methods : ["GET", "POST"]
+    }
+});
 const userMapping = {};
 app.use(express.json());
 app.use(express.static('dist'));
-app.use( (req, res)=>{
+app.use('*', (req, res)=>{
     res.sendFile(path.join(__dirname, 'dist', 'index.html'));
 })
 function getConnections(Roomid){
@@ -23,6 +28,8 @@ function getConnections(Roomid){
            }
     })
 }
+
+  
 io.on('connection', (socket)=>{
     socket.on('join', (params)=>{
           userMapping[socket.id] = params.username;
@@ -56,10 +63,6 @@ io.on('connection', (socket)=>{
     })
     
 })
-
-
-
-const port = 3000;
+const port =  3000;
 server.listen(port, ()=>{
-    
-})
+});
